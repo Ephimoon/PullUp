@@ -1,30 +1,85 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 export function Navbar() {
+  // TODO: replace this with real Supabase auth
+  const isLoggedIn = false;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log("Logging out (placeholder)");
+    navigate("/");
+  };
+
+  const linkClass = ({ isActive }) =>
+    ["nav-text-link", isActive ? "nav-text-link-active" : ""]
+      .filter(Boolean)
+      .join(" ");
+
   return (
-    <header className="fixed top-0 inset-x-0 z-20 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur">
-      <nav className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+    <header className="nav-shell fixed top-3 inset-x-0 z-20">
+      <nav className="nav-pill w-full max-w-[1112px] mx-auto px-5 h-14 flex items-center justify-between">
+        {/* Logo / brand */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-2xl bg-gradient-to-br from-pullup-primary to-pullup-accent shadow-pullup-soft" />
-          <span className="text-sm font-semibold tracking-tight">
-            Pull<span className="text-pullup-accent">Up</span>
+          <div className="nav-logo-orb h-7 w-7 rounded-full" />
+          <span className="nav-brand text-lg font-semibold tracking-tight">
+            Pull<span className="nav-brand-accent">Up</span>
           </span>
         </Link>
 
-        <div className="flex items-center gap-3 text-xs">
-          <NavLink
-            to="/create"
-            className={({ isActive }) =>
-              `btn-ghost hidden sm:inline-flex ${
-                isActive ? "border-pullup-primary/70 text-pullup-primary" : ""
-              }`
-            }
-          >
-            Create a PullUp
+        {/* Right side */}
+        <div className="flex items-center gap-4 text-xs">
+          {/* Always: Where do I PullUp? */}
+          <NavLink to="/where" className={linkClass}>
+            Where do I PullUp?
           </NavLink>
-          <Link to="/create" className="btn-primary">
-            New plan
-          </Link>
+
+          {isLoggedIn ? (
+            <>
+              {/* Logged in: Edit + Create + Logout */}
+              <NavLink to="/edit" className={linkClass}>
+                Edit my PullUp
+              </NavLink>
+
+              <NavLink
+                to="/create"
+                className={({ isActive }) =>
+                  [
+                    "nav-cta-primary",
+                    isActive ? "nav-text-link-active" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")
+                }
+              >
+                Create PullUp
+              </NavLink>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="nav-logout-pill"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              {/* Not logged in: Create PullUp → login/register */}
+              <NavLink
+                to="/auth/login"
+                className={({ isActive }) =>
+                  [
+                    "nav-cta-primary",
+                    isActive ? "nav-text-link-active" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")
+                }
+              >
+                Create PullUp
+              </NavLink>
+            </>
+          )}
         </div>
       </nav>
     </header>

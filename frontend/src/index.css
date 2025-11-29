@@ -1,44 +1,695 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html {
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+  }
+
   :root {
-    color-scheme: dark;
+    /* 🌈 pastel background */
+    --pullup-bg-gradient: linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #f9f0ff 28%,
+      #e9f4ff 60%,
+      #fcecff 100%
+    );
+
+    /* 🧊 Surfaces */
+    --pullup-card: rgba(255, 255, 255, 0.86);
+    --pullup-card-border: rgba(15, 23, 42, 0.08);
+
+    /* Card glass + rows */
+    --pullup-card-bg: rgba(255, 255, 255, 0.78);
+    --pullup-card-shadow: 0 22px 40px rgba(15, 23, 42, 0.12);
+    --pullup-pill-row-bg: rgba(255, 255, 255, 0.8);
+    --pullup-pill-row-border: rgba(226, 232, 240, 0.9);
+
+    /* 🎯 Brand & accents */
+    --pullup-primary: #ec4899;     /* pink */
+    --pullup-secondary: #5984d5;   /* blue */
+
+    --pullup-heading-highlight: #ec4899;
+    --pullup-heading-highlight-alt: #5984d5;
+
+    --pullup-logo-orb-from: #ec4899;
+    --pullup-logo-orb-to: #5984d5;
+    --pullup-logo-orb-shadow: 0 0 18px rgba(129, 140, 248, 0.65);
+
+    /* ✅ Status colors */
+    --pullup-status-yes-bg: #bbf7d0;
+    --pullup-status-yes-text: #59be7e;
+
+    --pullup-status-maybe-bg: #fef3c7;
+    --pullup-status-maybe-text: rgb(217, 135, 87);
+
+    --pullup-status-no-bg: #fecaca;
+    --pullup-status-no-text: #df6161;
+
+    /* 🔤 Text */
+    --pullup-text-strong: #111827;
+    --pullup-text-soft: #475569;
+    --pullup-text-muted: #6b7280;
+    --pullup-text-light: #e5e7eb;
+    --pullup-text-eyebrow: #64748b;
+
+    /* 🧭 Navbar */
+    --pullup-nav-bg: rgba(255, 255, 255, 0.78);
+    --pullup-nav-border: rgba(148, 163, 184, 0.25);
+    --pullup-nav-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+
+    /* 🎟 Pills / chips */
+    --pullup-tag-pill-bg: rgba(255, 255, 255, 0.7);
+    --pullup-tag-pill-border: rgba(148, 163, 184, 0.7);
+    --pullup-tag-dot: #22c55e;
+
+    /* 🧾 Inputs */
+    --pullup-input-bg: rgba(255, 255, 255, 0.9);
+    --pullup-input-border: rgba(148, 163, 184, 0.7);
+    --pullup-input-focus-ring: 0 0 0 1px rgba(14, 165, 233, 0.35);
+
+    /* 🔘 Buttons */
+    --pullup-btn-primary-bg: #020617;
+    --pullup-btn-primary-text: #f9fafb;
+    --pullup-btn-secondary-bg: #ffffff;
+    --pullup-btn-secondary-border: rgba(15, 23, 42, 0.12);
+    --pullup-btn-secondary-text: #020617;
+    --pullup-btn-secondary-hover-bg: #f3f4f6;
+
+    /* Primary gradient + shadow */
+    --pullup-btn-primary-gradient: linear-gradient(
+      135deg,
+      var(--pullup-primary),
+      var(--pullup-secondary)
+    );
+    --pullup-btn-primary-shadow: 0 12px 25px rgba(89, 132, 213, 0.28);
+
+    /* Timeslot / misc shadows */
+    --pullup-timeslot-active-shadow: 0 0 16px rgba(14, 165, 233, 0.35);
   }
 
   body {
-    @apply bg-pullup-bg text-slate-100 font-sans antialiased;
+    margin: 0;
+    font-family: "Space Grotesk", "Work Sans", system-ui, -apple-system,
+      BlinkMacSystemFont, sans-serif;
+    background: var(--pullup-bg-gradient);
+    background-attachment: fixed;
+    color: var(--pullup-text-strong);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
   }
 }
 
-/* Shared “design-system” classes */
 @layer components {
-  .card {
-    @apply rounded-card border border-slate-800/80
-      bg-gradient-to-b from-[#05081B] to-[#020317]
-      px-6 py-5 shadow-card-strong;
+  /* 🌈 App shell */
+  .app-bg {
+    background: radial-gradient(
+        circle at 20% 20%,
+        rgba(236, 72, 153, 0.14),
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 80% 25%,
+        rgba(89, 132, 213, 0.2),
+        transparent 34%
+      ),
+      var(--pullup-bg-gradient);
   }
 
+  /* 🧭 Navbar shell */
+  .nav-shell {
+    background: transparent;
+    padding: 1rem 0;
+  }
+
+  .nav-pill {
+    position: relative;
+    padding: 2rem 0;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.292);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 18px 38px rgba(55, 98, 196, 0.16);
+    backdrop-filter: blur(14px);
+  }
+
+  /* Logo orb + brand */
+  .nav-logo-orb {
+    background-image: radial-gradient(
+      circle at 30% 20%,
+      var(--pullup-logo-orb-from),
+      var(--pullup-logo-orb-to)
+    );
+    box-shadow: var(--pullup-logo-orb-shadow);
+  }
+
+  .nav-brand {
+    color: var(--pullup-text-strong);
+  }
+
+  .nav-brand-accent {
+    color: var(--pullup-primary);
+  }
+
+  /* Text links (Where / Edit) */
+  .nav-text-link {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--pullup-text-soft);
+    padding: 0.15rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+
+  .nav-text-link:hover {
+    color: var(--pullup-text-strong);
+  }
+
+  .nav-text-link-active {
+    color: var(--pullup-text-strong);
+    border-bottom-color: var(--pullup-primary);
+  }
+
+  /* CTA button for Create PullUp */
+  .nav-cta-primary {
+    @apply inline-flex items-center justify-center rounded-full px-4 py-1.5 text-lg font-semibold transition;
+    background-image: var(--pullup-btn-primary-gradient);
+    color: var(--pullup-btn-primary-text);
+    box-shadow: var(--pullup-btn-primary-shadow);
+  }
+
+  .nav-cta-primary:hover {
+    filter: brightness(1.05);
+  }
+
+  /* Logout pill */
+  .nav-logout-pill {
+    @apply inline-flex items-center justify-center 
+      rounded-full px-4 py-1.5 text-lg font-medium 
+      transition border;
+    border-color: var(--pullup-nav-border);
+    color: var(--pullup-text-muted);
+    background-color: transparent;
+  }
+
+  .nav-logout-pill:hover {
+    color: var(--pullup-text-strong);
+    border-color: var(--pullup-primary);
+  }
+
+  /* 🏷 Eyebrow pill on hero */
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+    border: 1px solid var(--pullup-tag-pill-border);
+    background-color: var(--pullup-tag-pill-bg);
+    font-size: 0.7rem;
+    color: var(--pullup-text-soft);
+  }
+
+  .tag-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    background-color: var(--pullup-tag-dot);
+  }
+
+  /* 🔤 Text helpers */
+  .pullup-text-soft {
+    color: var(--pullup-text-soft);
+  }
+
+  .pullup-text-muted {
+    color: var(--pullup-text-muted);
+  }
+
+  .eyebrow-label {
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    color: var(--pullup-text-eyebrow);
+  }
+
+  .hero-heading-main {
+    color: var(--pullup-text-strong);
+  }
+
+  .hero-heading-highlight {
+    color: var(--pullup-heading-highlight);
+  }
+
+  /* 🧾 Cards */
+  .card {
+    @apply rounded-2xl px-6 py-5;
+    background: var(--pullup-card-bg);
+    border: 1px solid var(--pullup-card-border);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: var(--pullup-card-shadow);
+    color: var(--pullup-text-strong);
+  }
+
+  /* rows inside the card */
+  .pill-row {
+    @apply flex items-center justify-between px-3 py-2 rounded-xl;
+    background: var(--pullup-pill-row-bg);
+    border: 1px solid var(--pullup-pill-row-border);
+  }
+
+  /* status labels in the rows – pastel text, not neon */
+  .status-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .status-text-yes {
+    color: var(--pullup-status-yes-text);
+  }
+
+  .status-text-maybe {
+    color: var(--pullup-status-maybe-text);
+  }
+
+  .status-text-no {
+    color: var(--pullup-status-no-text);
+  }
+
+  /* 🔘 Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-1.5
-      px-4 py-2 rounded-full text-sm font-semibold
-      bg-pullup-primary text-slate-950
-      shadow-md shadow-pullup-primary/40
-      hover:brightness-110 transition;
+    @apply inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-semibold transition;
+    background-image: var(--pullup-btn-primary-gradient);
+    color: var(--pullup-btn-primary-text);
+    box-shadow: var(--pullup-btn-primary-shadow);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.05);
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-1.5
-      px-4 py-2 rounded-full text-sm font-semibold
-      border border-slate-700/80
-      bg-slate-900/40 text-slate-100
-      hover:bg-slate-900 transition;
+    @apply inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-full text-sm font-semibold transition;
+    background-color: var(--pullup-btn-secondary-bg);
+    color: var(--pullup-btn-secondary-text);
+    border: 1px solid var(--pullup-btn-secondary-border);
   }
 
-  .pill-row {
-    @apply flex items-center justify-between
-      rounded-full px-4 py-2
-      bg-pullup-row;
+  .btn-ghost:hover {
+    background-color: var(--pullup-btn-secondary-hover-bg);
+  }
+
+  /* 🎯 New hero styles */
+  .hero-shell {
+    position: relative;
+    overflow: visible;
+    border-radius: 28px;
+    padding: 2rem clamp(1.25rem, 4vw, 2.75rem);
+    background: linear-gradient(
+        135deg,
+        rgba(236, 72, 153, 0.2),
+        rgba(89, 132, 213, 0.24)
+      ),
+      rgba(255, 255, 255, 0.72);
+    background-size: 220% 220%, 100% 100%;
+    background-position: 0% 50%, 0 0;
+    animation: heroGradientPan 5s ease-in-out infinite;
+    box-shadow: 0 25px 70px rgba(55, 98, 196, 0.14);
+    backdrop-filter: blur(14px);
+    max-width: 1112px;
+    margin: 0 auto;
+    width: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+  }
+
+  .hero-page {
+    min-height: calc(100vh - 4rem);
+    height: calc(100vh - 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+    opacity: 0.2;
+    mix-blend-mode: soft-light;
+  }
+  @keyframes heroGradientPan {
+    0% {
+      background-position: 0% 50%, 0 0;
+    }
+    25% {
+      background-position: 60% 0%, 0 0;
+    }
+    50% {
+      background-position: 100% 50%, 0 0;
+    }
+    75% {
+      background-position: 60% 100%, 0 0;
+    }
+    100% {
+      background-position: 0% 50%, 0 0;
+    }
+  }
+
+  .hero-aurora {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.7;
+    z-index: 1;
+  }
+
+  .hero-aurora.one {
+    width: 32vw;
+    height: 32vw;
+    top: -12%;
+    left: -6%;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.26), transparent);
+  }
+
+  .hero-aurora.two {
+    width: 24vw;
+    height: 24vw;
+    bottom: -10%;
+    right: 2%;
+    background: radial-gradient(circle, rgba(89, 132, 213, 0.24), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .hero-grid-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+  .hero-copy-block {
+    max-width: 36rem;
+  }
+
+  .hero-title-left {
+    text-align: left;
+  }
+
+  .hero-subtitle-highlight {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    background: linear-gradient(
+      135deg,
+      var(--pullup-primary),
+      var(--pullup-secondary)
+    );
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin-top: 0.25rem;
+  }
+
+  .hero-preview-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    width: min(520px, 100%);
+    margin: 0 auto;
+  }
+
+  .hero-rotating-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.95rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px dashed rgba(148, 163, 184, 0.6);
+    color: var(--pullup-text-strong);
+    font-size: 0.9rem;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    min-height: 44px;
+    align-self: center;
+    margin-top: 0.75rem;
+  }
+
+  .hero-rotating-text {
+    display: inline-block;
+    animation: rotateFade 0.5s ease;
+  }
+
+  @media (max-width: 900px) {
+    .hero-shell {
+      padding: 1.5rem;
+    }
+
+    .hero-subtitle {
+      max-width: 100%;
+    }
+
+    .hero-preview-wrap {
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-grid-split {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero-copy-block {
+    max-width: 34rem;
+  }
+
+  .hero-subtitle {
+    color: var(--pullup-text-soft);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 40rem;
+    letter-spacing: -0.005em;
+  }
+
+  .hero-title {
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .hero-highlight {
+    background: linear-gradient(
+      135deg,
+      var(--pullup-primary),
+      var(--pullup-secondary)
+    );
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    color: var(--pullup-text-soft);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 36rem;
+  }
+
+  .btn-strong {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition;
+    background: linear-gradient(120deg, var(--pullup-primary), var(--pullup-secondary));
+    color: #0b1220;
+    box-shadow: 0 20px 45px rgba(89, 132, 213, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+
+  .btn-strong:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+  }
+
+  .btn-plain {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition;
+    color: var(--pullup-text-strong);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+  }
+
+  .btn-plain:hover {
+    border-color: var(--pullup-primary);
+    color: var(--pullup-primary);
+  }
+
+  .hero-note-dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    background: linear-gradient(
+      135deg,
+      var(--pullup-primary),
+      var(--pullup-secondary)
+    );
+  }
+
+  @keyframes rotateFade {
+    0% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .preview-shell {
+    position: relative;
+    padding: 1rem;
+    border-radius: 22px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.82)
+      ),
+      rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+    backdrop-filter: blur(8px);
+  }
+
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .preview-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--pullup-text-strong);
+  }
+
+  .preview-chip {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: rgba(236, 72, 153, 0.12);
+    color: var(--pullup-primary);
+    border: 1px solid rgba(236, 72, 153, 0.2);
+  }
+
+  .preview-stack {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .preview-footnote {
+    font-size: 0.75rem;
+    color: var(--pullup-text-muted);
+    text-align: right;
+  }
+
+  /* ⏱ Time slot chip */
+  .timeslot-chip {
+    @apply px-3 py-1 rounded-full text-xs font-medium border transition;
+  }
+
+  .timeslot-chip-active {
+    background-color: var(--pullup-primary);
+    border-color: var(--pullup-primary);
+    color: var(--pullup-text-strong);
+    box-shadow: var(--pullup-timeslot-active-shadow);
+  }
+
+  .timeslot-chip-inactive {
+    background-color: var(--pullup-card);
+    border-color: var(--pullup-card-border);
+    color: var(--pullup-text-soft);
+  }
+
+  .timeslot-chip-inactive:hover {
+    border-color: var(--pullup-primary);
+  }
+
+  /* 📅 Form fields */
+  .field-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--pullup-text-soft);
+  }
+
+  .field-input,
+  .field-textarea {
+    @apply rounded-xl px-3 py-2 text-sm outline-none;
+    width: 100%;
+    border: 1px solid var(--pullup-input-border);
+    background-color: var(--pullup-input-bg);
+    color: var(--pullup-text-strong);
+  }
+
+  .field-textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  .field-input:focus,
+  .field-textarea:focus {
+    border-color: var(--pullup-primary);
+    box-shadow: var(--pullup-input-focus-ring);
+  }
+
+  /* 📊 Availability buttons */
+  .availability-chip {
+    @apply px-2.5 py-1 rounded-full font-semibold text-[11px];
+  }
+
+  .availability-yes {
+    background-color: var(--pullup-status-yes-bg);
+    color: var(--pullup-status-yes-text);
+  }
+
+  .availability-maybe {
+    background-color: var(--pullup-status-maybe-bg);
+    color: var(--pullup-status-maybe-text);
+  }
+
+  .availability-no {
+    background-color: var(--pullup-status-no-bg);
+    color: var(--pullup-status-no-text);
+  }
+
+  /* 📦 Slot row on Join page */
+  .slot-row {
+    @apply flex items-center justify-between rounded-xl px-3 py-2.5;
+    background-color: var(--pullup-card);
+    border: 1px solid var(--pullup-card-border);
+  }
+
+  /* Small badge for codes/types */
+  .code-tag {
+    border-radius: 9999px;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.7rem;
+    border: 1px solid var(--pullup-card-border);
+    background-color: var(--pullup-card);
+    color: var(--pullup-text-soft);
   }
 }
+
+/* stylelint-enable at-rule-no-unknown */
